@@ -24,7 +24,7 @@ int main(){
         error("Bind failed");
      clilen=sizeof(cli_addr);
      listen(sockfd,5);
-     newsockfd=accept(sockfd,(struct sock_addr*)&cli_addr,&clilen);
+     newsockfd=accept(sockfd,(struct sockaddr*)&cli_addr,&clilen);
      if(newsockfd<0) error("accept failed");
      printf("Accept done\n");
      read(newsockfd,buffer,255);
