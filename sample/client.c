@@ -9,7 +9,7 @@
 #define PORT 8080
 void error(const char* msg){
     perror(msg);
-    exit(0);
+    exit(1);
 }
 int main(){
     int sockfd,n;
@@ -23,15 +23,16 @@ int main(){
         error("invalid address");
     if(connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr))<0)
         error("Connection failed");
-    printf("Client : ");
-    if(fgets(buffer,255,stdin)!=NULL){
-        buffer[strcspn(buffer,"\n")]=0;
+    while(1){
+        printf("Client : ");
+        fgets(buffer,255,stdin);
         send(sockfd,buffer,strlen(buffer),0);
         n=recv(sockfd,buffer,255,0);
-        if(n>0){
-            printf("Server : %s",buffer);
-        }
+        if(n<0) error("Error on read");
+        printf("Server : %s",buffer);
+        int i=strncmp(buffer,"Bye",3);
+        if(i==0) break;
     }
     close(sockfd);
-
+    return 0;
 }
