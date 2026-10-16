@@ -21,7 +21,7 @@ int main(){
     serv_addr.sin_port=htons(PORT);
     if(inet_pton(AF_INET,"127.0.0.0",&serv_addr.sin_addr)<=0)
         error("invalid address");
-    if(connect(sockfd,(struct socketaddr*)&serv_addr,sizeof(serv_addr)<0))
+    if(connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr)<0))
         error("Connection failed");
     printf("Client : ");
     if(fgets(buffer,255,stdin)!=NULL){
