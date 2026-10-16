@@ -19,9 +19,9 @@ int main(){
     if(sockfd<0) error("error opening socket");
     serv_addr.sin_family=AF_INET;
     serv_addr.sin_port=htons(PORT);
-    if(inet_pton(AF_INET,"127.0.0.0",&serv_addr.sin_addr)<=0)
+    if(inet_pton(AF_INET,"127.0.0.1",&serv_addr.sin_addr)<=0)
         error("invalid address");
-    if(connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr)<0))
+    if(connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr))<0)
         error("Connection failed");
     printf("Client : ");
     if(fgets(buffer,255,stdin)!=NULL){
