@@ -25,7 +25,8 @@ int main(){
     fgets(buffer,255,stdin);
     int s=strlen(buffer);
     sendto(sockfd,buffer,s,0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
-    recvfrom(sockfd,buffer,255,0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+    socklen_t len=sizeof(serv_addr);
+    recvfrom(sockfd,buffer,255,0,(struct sockaddr*)&serv_addr,&len);
     printf("Reversed : %s",buffer);
     close(sockfd);
     return 0;

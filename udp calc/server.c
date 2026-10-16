@@ -26,16 +26,17 @@ int main(){
     while(1){
         clilen=sizeof(cli_addr);
         n=recvfrom(sockfd,buffer,255,0,(struct sockaddr*)&cli_addr,&clilen);
+        buffer[n]='\0';
         if(n<0) continue;
         int a,c;
         char b;
         if(sscanf(buffer,"%d %c %d",&a,&b,&c)==3){
             int res;
             switch(b){
-                case '+': res=a+b; break;
-                case '-': res=a-b; break;
-                case '*': res=a*b; break;
-                case '/': if(b!=0) res=a/b; break;
+                case '+': res=a+c; break;
+                case '-': res=a-c; break;
+                case '*': res=a*c; break;
+                case '/': if(c!=0) res=a/c; break;
                 default: res=-1;
             }
             if(res==-1){
@@ -53,8 +54,9 @@ int main(){
                 res/=10;
             }
         }
+        sendto(sockfd,buffer,strlen(buffer),0,(struct sockaddr*)&cli_addr,clilen);
     }
-    sendto(sockfd,buffer,strlen(buffer),0,(struct sockaddr*)&cli_addr,&clilen);
+    
     close(sockfd);
     return 0;
 }
