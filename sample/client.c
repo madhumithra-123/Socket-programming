@@ -26,8 +26,8 @@ int main(){
     while(1){
         printf("Client : ");
         fgets(buffer,255,stdin);
-        send(sockfd,buffer,strlen(buffer),0);
-        n=recv(sockfd,buffer,255,0);
+        write(sockfd,buffer,strlen(buffer));
+        n=read(sockfd,buffer,255);
         if(n<0) error("Error on read");
         printf("Server : %s",buffer);
         int i=strncmp(buffer,"Bye",3);

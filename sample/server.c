@@ -27,11 +27,11 @@ int main(){
     newsockfd=accept(socketfd,(struct sockaddr*)&cli_addr,&clilen);
     if(newsockfd<0) error("Error on accept");
     while(1){
-        int n=recv(newsockfd,buffer,255,0);
+        int n=read(newsockfd,buffer,255);
         if(n<0) error("error in read");
         printf("Client : %s",buffer);
         fgets(buffer,255,stdin);
-        send(newsockfd,buffer,strlen(buffer),0);
+        write(newsockfd,buffer,strlen(buffer));
         int i=strncmp("Bye",buffer,3);
         if(i==0) break;
     }
